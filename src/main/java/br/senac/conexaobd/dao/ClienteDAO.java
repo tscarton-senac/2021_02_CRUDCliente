@@ -61,5 +61,61 @@ public class ClienteDAO {
        
    }
    
+   public static Cliente getClientePorCPF(String cpf) {
+       Cliente cliente = null;
+       String query = "select * from cliente where cpf=?";
+       
+       Connection con = Conexao.getConexao();
+       try {
+           PreparedStatement ps = con.prepareStatement(query);
+           ps.setString(1, cpf);
+           ResultSet rs = ps.executeQuery();
+           while (rs.next()) {
+               cliente = new Cliente();
+               String nome = rs.getString("nome");
+               String email = rs.getString("email");
+               cliente.setNome(nome);
+               cliente.setEmail(email);
+               cliente.setCpf(cpf);
+           }
+       } catch (SQLException ex) {
+           Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       return cliente;
+       
+   }
+   
+   public static boolean deletarCliente(String cpf) {
+       boolean ok = true;
+       String query = "delete from cliente where cpf=?";
+       Connection con = Conexao.getConexao();
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, cpf);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        }
+        return ok;
+   }
+   
+   public static boolean atualizarCliente(Cliente cliente) {
+       boolean ok = true;
+       String query = "update cliente set nome=?,email=? where cpf=?";
+       Connection con = Conexao.getConexao();
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, cliente.getNome());
+            ps.setString(2, cliente.getEmail());
+            ps.setString(3, cliente.getCpf());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        }
+        return ok;
+   }
+   
 
 }

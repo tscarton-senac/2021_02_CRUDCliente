@@ -24,6 +24,8 @@
                         <td>${cliente.nome}</td>
                         <td>${cliente.email}</td>
                         <td>${cliente.cpf}</td>
+                        <td><a href="CadastroClienteServlet?cpfUsuario=${cliente.cpf}&ope=1" >Atualizar</a></td>
+                        <td><a href="CadastroClienteServlet?cpfUsuario=${cliente.cpf}">Deletar</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
