@@ -16,6 +16,7 @@
         <c:import url="uteis/header.jsp"/>
         <div>Menu</div>
         <a href="cliente/cadastro.jsp">Cadastrar Cliente</a><br/>
-        <a href="cliente/ListarClienteServlet">Listar Cliente</a>
+        <a href="cliente/ListarClienteServlet">Listar Cliente</a><br/>
+        <a href="cliente/busca.jsp">Buscar Cliente</a>
     </body>
 </html>

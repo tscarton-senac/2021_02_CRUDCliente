@@ -85,6 +85,33 @@ public class ClienteDAO {
        
    }
    
+   public static List<Cliente> getClientePorNome(String nomeParam) {
+       nomeParam = nomeParam.toUpperCase();
+       List<Cliente> clientes = new ArrayList<>();
+       String query = "select * from cliente where UPPER(nome) like ?";
+       
+       Connection con = Conexao.getConexao(); 
+       try {
+           PreparedStatement ps = con.prepareStatement(query);
+           ps.setString(1, nomeParam+"%");
+           ResultSet rs = ps.executeQuery();
+           while (rs.next()) {
+               Cliente cliente = new Cliente();
+               String nome = rs.getString("nome");
+               String email = rs.getString("email");
+               String cpf = rs.getString("cpf");
+               cliente.setNome(nome);
+               cliente.setEmail(email);
+               cliente.setCpf(cpf);
+               clientes.add(cliente);
+           }
+       } catch (SQLException ex) {
+           Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       return clientes;
+       
+   }
+   
    public static boolean deletarCliente(String cpf) {
        boolean ok = true;
        String query = "delete from cliente where cpf=?";
